@@ -20,4 +20,5 @@ body,
 .app-content {
   flex: 1;
   overflow-y: auto;
+  background-color: #f8fafc; /* 보기 편하게 연한 배경색 추가 */
 }
