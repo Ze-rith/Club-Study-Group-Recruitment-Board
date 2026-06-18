@@ -1,5 +1,5 @@
 import "./MainPage.css";
-import type { Post } from "../types";
+import type { Post } from "../types.ts";
 
 interface MainPageProps {
     posts: Post[]; // App(부모) 컴포넌트로부터 전달받은 전체 모집글 상태 배열

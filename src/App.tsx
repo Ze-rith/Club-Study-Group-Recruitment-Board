@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Topbar from "./components/Topbar";
 import Sidebar from "./components/Sidebar";
-import MainPage from "./components/MainPage";
+import MainPage from "./screen/MainPage.tsx";
 import RegisterPage from "./pages/RegisterPage";
 import type { Post, NewPostInput, PageType } from "./types";
 
