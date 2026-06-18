@@ -1,0 +1,133 @@
+.main-page {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.main-intro h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 6px;
+}
+
+.main-intro p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 카드를 바둑판 배열로 배치하기 위한 Grid 설정 */
+.main-post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* 개별 모집글 카드 디자인 */
+.main-post-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.main-post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 모집 인원이 꽉 찬 마감 카드 스타일 */
+.card-disabled {
+    background-color: #fafafa;
+    border-color: #e0e0e0;
+    opacity: 0.8;
+}
+
+/* 배지 영역 */
+.card-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+}
+
+.badge-recruiting {
+    background-color: #e6f4ea;
+    color: #137333;
+}
+
+.badge-full {
+    background-color: #fce8e6;
+    color: #c5221f;
+}
+
+.card-count {
+    font-size: 12px;
+    color: #5f6368;
+    font-weight: 500;
+}
+
+/* 제목 및 내용 */
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #202124;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.card-content {
+    font-size: 13px;
+    color: #5f6368;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    /* 글이 너무 길어질 때 깔끔하게 끊어주는 효과 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 푸터 영역 */
+.card-footer {
+    border-top: 1px solid #f1f3f4;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-author {
+    font-size: 12px;
+    color: #70757a;
+}
+
+/* 빈 상태 화면 스타일 */
+.main-empty {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px dashed #cbd5e1;
+    color: #64748b;
+    font-size: 15px;
+}
+
+.main-empty .sub-text {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 8px;
+}
