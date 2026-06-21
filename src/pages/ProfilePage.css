@@ -175,6 +175,17 @@
   color: #c5221f;
 }
 
+/* 이름 입력 전 안내 문구 */
+.profile-guide {
+  font-size: 14px;
+  color: #64748b;
+  padding: 28px 20px;
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+}
+
 /* 신청 취소 버튼 */
 .profile-cancel-btn {
   margin-top: 4px;

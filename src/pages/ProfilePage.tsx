@@ -53,6 +53,14 @@ function ProfilePage({ posts, onCancelApply }: ProfilePageProps) {
         />
       </section>
 
+      {/* 이름을 입력하기 전에는 활동 내역 대신 안내 문구를 보여준다.
+          (빈 목록만 덩그러니 나오는 것보다 사용자에게 무엇을 해야 하는지 알려준다.) */}
+      {!trimmedName ? (
+        <p className="profile-guide">
+          위에 이름을 입력하면 작성·신청한 모집글이 여기에 표시돼요. 🙌
+        </p>
+      ) : (
+        <>
       {/* 활동 요약 통계 */}
       <section className="profile-stats">
         <div className="profile-stat-card">
@@ -128,6 +136,8 @@ function ProfilePage({ posts, onCancelApply }: ProfilePageProps) {
           </ul>
         )}
       </section>
+        </>
+      )}
     </div>
   );
 }
