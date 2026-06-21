@@ -4,6 +4,7 @@ import Topbar from "./components/Topbar";
 import Sidebar from "./components/Sidebar";
 import MainPage from "./screen/MainPage.tsx";
 import RegisterPage from "./pages/RegisterPage";
+import ProfilePage from "./pages/ProfilePage";
 import type { Post, NewPostInput, PageType } from "./types";
 
 function App() {
@@ -80,12 +81,7 @@ function App() {
                     />
                 );
             case "profile":
-                return (
-                    <div style={{ padding: "32px" }}>
-                        <h2>👤 프로필 페이지</h2>
-                        <p>내 정보 및 신청 내역 확인 화면 (개발 진행 중)</p>
-                    </div>
-                );
+                return <ProfilePage posts={posts} />;
             default:
                 return <MainPage posts={posts} />;
         }
