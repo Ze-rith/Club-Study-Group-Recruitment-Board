@@ -174,3 +174,21 @@
   background-color: #fce8e6;
   color: #c5221f;
 }
+
+/* 신청 취소 버튼 */
+.profile-cancel-btn {
+  margin-top: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c5221f;
+  background-color: #fff;
+  border: 1px solid #f3c0bd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.profile-cancel-btn:hover {
+  background-color: #fce8e6;
+}

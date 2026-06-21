@@ -87,6 +87,23 @@ function App() {
         );
     };
 
+    // 4-1. 신청 취소 함수 (프로필 페이지에서 사용)
+    // 해당 글의 applicants 배열에서 내 이름과 같은 신청자만 걸러낸다.
+    const handleCancelApply = (postId: string, applicantName: string) => {
+        setPosts(
+            posts.map((post) =>
+                post.id === postId
+                    ? {
+                          ...post,
+                          applicants: post.applicants.filter(
+                              (a) => a.name !== applicantName
+                          ),
+                      }
+                    : post
+            )
+        );
+    };
+
     // 5. 현재 탭 상태에 따라 본문 화면을 다르게 렌더링 (조건부 렌더링)
     const renderPage = () => {
         switch (currentPage) {
@@ -101,7 +118,9 @@ function App() {
                     />
                 );
             case "profile":
-                return <ProfilePage posts={posts} />;
+                return (
+                    <ProfilePage posts={posts} onCancelApply={handleCancelApply} />
+                );
             default:
                 return <MainPage posts={posts} />;
         }

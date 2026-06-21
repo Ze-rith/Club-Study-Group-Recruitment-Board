@@ -4,6 +4,7 @@ import type { Post } from "../types";
 
 interface ProfilePageProps {
   posts: Post[]; // App(부모)이 들고 있는 전체 모집글 상태 배열
+  onCancelApply: (postId: string, applicantName: string) => void; // 신청 취소 함수
 }
 
 // 프로필 페이지.
@@ -11,7 +12,7 @@ interface ProfilePageProps {
 // "내 이름"을 입력하면 그 이름을 기준으로
 // 1) 내가 작성한 모집글  2) 내가 신청한 모집글 을 모아서 보여준다.
 // (로그인 기능이 생기면 이 입력창 대신 로그인된 사용자 이름을 쓰면 된다.)
-function ProfilePage({ posts }: ProfilePageProps) {
+function ProfilePage({ posts, onCancelApply }: ProfilePageProps) {
   // 더미 데이터에 신청자로 들어가 있는 "김승우"를 기본값으로 둬서
   // 첫 화면이 비어 보이지 않게 했다.
   const [myName, setMyName] = useState("김승우");
@@ -110,6 +111,18 @@ function ProfilePage({ posts }: ProfilePageProps) {
                   <span className="profile-post-meta">작성자: {post.author}</span>
                 </div>
                 <p className="profile-post-content">{post.content}</p>
+                <button
+                  type="button"
+                  className="profile-cancel-btn"
+                  onClick={() => {
+                    // 실수로 누르는 것을 막기 위해 한 번 더 확인
+                    if (window.confirm(`'${post.title}' 신청을 취소할까요?`)) {
+                      onCancelApply(post.id, trimmedName);
+                    }
+                  }}
+                >
+                  신청 취소
+                </button>
               </li>
             ))}
           </ul>
