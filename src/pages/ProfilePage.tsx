@@ -13,9 +13,9 @@ interface ProfilePageProps {
 // 1) 내가 작성한 모집글  2) 내가 신청한 모집글 을 모아서 보여준다.
 // (로그인 기능이 생기면 이 입력창 대신 로그인된 사용자 이름을 쓰면 된다.)
 function ProfilePage({ posts, onCancelApply }: ProfilePageProps) {
-  // 더미 데이터에 신청자로 들어가 있는 "김승우"를 기본값으로 둬서
-  // 첫 화면이 비어 보이지 않게 했다.
-  const [myName, setMyName] = useState("김승우");
+  // 기본값을 비워 두어, 프로필을 열면 특정인의 내역이 먼저 뜨지 않고
+  // "이름을 입력하세요" 안내 문구부터 보이도록 했다.
+  const [myName, setMyName] = useState("");
 
   const trimmedName = myName.trim();
 
