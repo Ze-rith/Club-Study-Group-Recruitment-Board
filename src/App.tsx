@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Topbar from "./components/Topbar";
 import Sidebar from "./components/Sidebar";
 import MainPage from "./screen/MainPage.tsx";
 import RegisterPage from "./pages/RegisterPage";
+import ProfilePage from "./pages/ProfilePage";
 import type { Post, NewPostInput, PageType } from "./types";
 
 function App() {
     // 1. 현재 어떤 페이지를 보고 있는지 상태 관리 ("main", "register", "profile")
     const [currentPage, setCurrentPage] = useState<PageType>("main");
 
-    // 2. 전체 모집글 상태 배열 (아키텍처 그림의 'posts 상태 배열')
-    const [posts, setPosts] = useState<Post[]>([
-        // 발표할 때 화면이 심심하지 않도록 기본 더미 데이터 2개 넣어둘게!
+    // localStorage 저장 키 (한 곳에서만 관리해 오타로 인한 버그를 막는다)
+    const STORAGE_KEY = "recruitment-posts";
+
+    // 발표할 때 화면이 심심하지 않도록 넣어둔 기본 더미 데이터
+    const DEFAULT_POSTS: Post[] = [
         {
             id: "1",
             title: "💻 React 웹 개발 스터디원 모집",
@@ -28,8 +31,26 @@ function App() {
             author: "이영희",
             capacity: 6,
             applicants: [],
+        },
+    ];
+
+    // 2. 전체 모집글 상태 배열 (아키텍처 그림의 'posts 상태 배열')
+    // 첫 렌더 때 localStorage에 저장된 값이 있으면 그걸 불러오고,
+    // 없으면(=처음 방문) 기본 더미 데이터로 시작한다. (lazy initializer)
+    const [posts, setPosts] = useState<Post[]>(() => {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? (JSON.parse(saved) as Post[]) : DEFAULT_POSTS;
+        } catch {
+            // JSON 파싱 실패 등 예외 상황에서도 앱이 죽지 않도록 기본값으로 복구
+            return DEFAULT_POSTS;
         }
-    ]);
+    });
+
+    // posts가 바뀔 때마다 localStorage에 자동 저장 → 새로고침해도 유지된다.
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+    }, [posts]);
 
     // 3. 새 모집글 등록 함수
     const handleAddPost = (newPost: NewPostInput) => {
@@ -66,6 +87,23 @@ function App() {
         );
     };
 
+    // 4-1. 신청 취소 함수 (프로필 페이지에서 사용)
+    // 해당 글의 applicants 배열에서 내 이름과 같은 신청자만 걸러낸다.
+    const handleCancelApply = (postId: string, applicantName: string) => {
+        setPosts(
+            posts.map((post) =>
+                post.id === postId
+                    ? {
+                          ...post,
+                          applicants: post.applicants.filter(
+                              (a) => a.name !== applicantName
+                          ),
+                      }
+                    : post
+            )
+        );
+    };
+
     // 5. 현재 탭 상태에 따라 본문 화면을 다르게 렌더링 (조건부 렌더링)
     const renderPage = () => {
         switch (currentPage) {
@@ -81,10 +119,7 @@ function App() {
                 );
             case "profile":
                 return (
-                    <div style={{ padding: "32px" }}>
-                        <h2>👤 프로필 페이지</h2>
-                        <p>내 정보 및 신청 내역 확인 화면 (개발 진행 중)</p>
-                    </div>
+                    <ProfilePage posts={posts} onCancelApply={handleCancelApply} />
                 );
             default:
                 return <MainPage posts={posts} />;
