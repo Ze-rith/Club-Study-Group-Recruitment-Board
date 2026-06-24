@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ProfilePage.css";
 import type { Post } from "../types";
+
+// 입력한 "내 이름"을 저장해 두는 localStorage 키
+const MY_NAME_KEY = "recruitment-my-name";
 
 interface ProfilePageProps {
   posts: Post[]; // App(부모)이 들고 있는 전체 모집글 상태 배열
@@ -13,9 +16,17 @@ interface ProfilePageProps {
 // 1) 내가 작성한 모집글  2) 내가 신청한 모집글 을 모아서 보여준다.
 // (로그인 기능이 생기면 이 입력창 대신 로그인된 사용자 이름을 쓰면 된다.)
 function ProfilePage({ posts, onCancelApply }: ProfilePageProps) {
-  // 기본값을 비워 두어, 프로필을 열면 특정인의 내역이 먼저 뜨지 않고
-  // "이름을 입력하세요" 안내 문구부터 보이도록 했다.
-  const [myName, setMyName] = useState("");
+  // 이름을 localStorage에서 불러와 초기값으로 사용한다.
+  // 저장된 값이 없으면(=처음 방문) 빈 문자열로 시작해
+  // "이름을 입력하세요" 안내 문구부터 보이도록 한다.
+  const [myName, setMyName] = useState(
+    () => localStorage.getItem(MY_NAME_KEY) ?? ""
+  );
+
+  // 이름이 바뀔 때마다 localStorage에 저장 → 새로고침해도 유지된다.
+  useEffect(() => {
+    localStorage.setItem(MY_NAME_KEY, myName);
+  }, [myName]);
 
   const trimmedName = myName.trim();
 
